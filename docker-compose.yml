@@ -1,0 +1,22 @@
+services:
+  # Web application service for development
+  web:
+    build:
+      context: .                  # Look in the current directory for build context
+      dockerfile: Dockerfile.dev  # Use Dockerfile.dev instead of the default Dockerfile
+    ports:
+      - "3000:3000"               # Map host port 3000 to container port 3000
+    volumes:
+      - /app/node_modules         # Anonymous Volume: Bookmarks node_modules inside the container
+      - .:/app                    # Bind Mount: Syncs current host directory to /app in container
+
+  # Test runner service
+  tests:
+    build:
+      context: .                  # Shares the same build context as the web service
+      dockerfile: Dockerfile.dev  # Uses the same development Dockerfile
+    volumes:
+      - /app/node_modules         # Anonymous Volume: Protects node_modules from host overwrite
+      - .:/app                    # Bind Mount: Allows live-reloading test files during changes
+    command: ["npm", "run", "test"] # Overrides default CMD in Dockerfile to run tests
+    
