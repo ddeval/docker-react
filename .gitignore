@@ -1,1 +1,10 @@
-shana
+# Terraform local directory and provider binaries
+.terraform/
+.terraform.lock.hcl
+
+# Terraform state files (may contain sensitive data)
+*.tfstate
+*.tfstate.backup
+
+# Log files
+*.log
